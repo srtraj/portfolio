@@ -77,10 +77,11 @@ class SocialButton extends StatelessWidget {
         ? ElevatedButton.icon(
             onPressed: handleClick,
             icon: FaIcon(icon, size: 16),
-            label: Text(label),
+            label: Text(label, style: Theme.of(context).textTheme.labelMedium),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueGrey.shade800,
-              foregroundColor: Colors.white,
+              // Use theme colors
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -89,7 +90,11 @@ class SocialButton extends StatelessWidget {
           )
         : IconButton(
             onPressed: handleClick,
-            icon: FaIcon(icon, color: Colors.blueGrey.shade300, size: 20),
+            icon: FaIcon(
+              icon,
+              color: Theme.of(context).colorScheme.primary,
+              size: 20,
+            ),
             tooltip: label,
             padding: const EdgeInsets.all(8),
             constraints: const BoxConstraints.tightFor(width: 48, height: 48),

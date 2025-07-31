@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portpolio/view/widget/about_me_section.dart';
+import 'package:portpolio/view/widget/custom_container.dart';
+import 'package:portpolio/view/widget/education_section.dart';
 import 'package:portpolio/view/widget/home_section.dart';
 import 'package:portpolio/view/widget/social_link_section.dart';
 
@@ -11,15 +14,12 @@ class PortfolioPage extends StatefulWidget {
   State<PortfolioPage> createState() => _PortfolioPageState();
 }
 
-class _PortfolioPageState extends State<PortfolioPage>
-    with SingleTickerProviderStateMixin {
+class _PortfolioPageState extends State<PortfolioPage> {
   final ScrollController _scrollController = ScrollController();
   final homeKey = GlobalKey();
   final projectKey = GlobalKey();
   final aboutKey = GlobalKey();
-
-  late AnimationController _controller;
-  late Animation<double> _fadeIn;
+  final educationKey = GlobalKey();
 
   void _scrollTo(GlobalKey key) {
     final context = key.currentContext;
@@ -30,23 +30,6 @@ class _PortfolioPageState extends State<PortfolioPage>
         curve: Curves.easeInOut,
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    );
-    _fadeIn = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -71,24 +54,26 @@ class _PortfolioPageState extends State<PortfolioPage>
                 child: const Text("Home"),
               ),
               TextButton(
-                onPressed: () => _scrollTo(projectKey),
-                child: const Text("Projects"),
-              ),
-              TextButton(
                 onPressed: () => _scrollTo(aboutKey),
                 child: const Text("About"),
+              ),
+              TextButton(
+                onPressed: () => _scrollTo(educationKey),
+                child: const Text("Education"),
               ),
               const Gap(50),
             ],
           ),
-          SliverToBoxAdapter(
-            child: FadeTransition(
-              opacity: _fadeIn,
-              child: HomeSection(homeKey: homeKey),
-            ),
+
+          CustomContainer(homeKey: homeKey, child: HomeSection()),
+          CustomContainer(child: const SocialLinks()),
+          CustomContainer(homeKey: aboutKey, child: const AboutMeSection()),
+          CustomContainer(
+            homeKey: educationKey,
+            child: const EducationSection(),
           ),
           SliverToBoxAdapter(
-            child: FadeTransition(opacity: _fadeIn, child: const SocialLinks()),
+            child: SizedBox(height: 16), // space
           ),
         ],
       ),

@@ -2,6 +2,13 @@
 class Assets {
   Assets._();
 
+  static const String assetsAndroid = 'assets/android.svg';
   static const String assetsBg = 'assets/bg.png';
+  static const String assetsCompose = 'assets/compose.svg';
+  static const String assetsFlutter = 'assets/flutter.svg';
+  static const String assetsGraduate = 'assets/graduate.svg';
+  static const String assetsKmp = 'assets/kmp.svg';
   static const String assetsProfile = 'assets/profile.png';
+  static const String assetsPython = 'assets/python.svg';
+  static const String assetsSchool = 'assets/school.svg';
 }
