@@ -50,7 +50,7 @@ class HomeSection extends StatelessWidget {
                       child: Image.asset(
                         Assets.assetsProfile,
                         width: isMobile
-                            ? MediaQuery.of(context).size.width
+                            ? MediaQuery.of(context).size.width - 75
                             : 400,
                         fit: BoxFit.cover,
                       ),
