@@ -11,4 +11,5 @@ class Assets {
   static const String assetsProfile = 'assets/profile.png';
   static const String assetsPython = 'assets/python.svg';
   static const String assetsSchool = 'assets/school.svg';
+
 }

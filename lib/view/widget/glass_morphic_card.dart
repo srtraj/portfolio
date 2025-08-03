@@ -9,7 +9,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 class GlassmorphicCard extends StatefulWidget {
   final double borderRadius;
   final double blur;
-  final Color backgroundColor;
   final EdgeInsets? padding;
   final String? leadingImage;
   final String? title;
@@ -20,7 +19,6 @@ class GlassmorphicCard extends StatefulWidget {
     super.key,
     this.borderRadius = 14,
     this.blur = 10,
-    this.backgroundColor = const Color(0x40FFFFFF), // semi-transparent white
     this.padding,
     this.leadingImage,
     this.expanded,
@@ -82,12 +80,9 @@ class _GlassmorphicCardState extends State<GlassmorphicCard>
                 ? const EdgeInsets.all(10.0)
                 : const EdgeInsets.all(3.0),
             decoration: BoxDecoration(
-              color: widget.backgroundColor,
               borderRadius: BorderRadius.circular(widget.borderRadius),
               border: Border.all(
-                color: Colors.white.withValues(
-                  alpha: 0.2,
-                ), // fixed invalid alpha
+                color: Theme.of(context).colorScheme.inverseSurface.withValues(alpha: 0.5), // fixed invalid alpha
                 width: 1.5,
               ),
             ),

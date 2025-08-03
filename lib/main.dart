@@ -1,6 +1,7 @@
 // File: main.dart
 
 import 'package:flutter/material.dart';
+import 'package:portpolio/view/flutter_info.dart';
 import 'package:portpolio/view/portfolio_page.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:portpolio/theme/app_theme.dart';
@@ -31,7 +32,7 @@ class PortfolioApp extends StatelessWidget {
                   Breakpoint(start: 1921, end: double.infinity, name: '4K'),
                 ],
               ),
-              home: const PortfolioPage(),
+              home: const FlutterInfoScreen(),
             );
           },
         );
