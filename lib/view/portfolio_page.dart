@@ -8,6 +8,7 @@ import 'package:portpolio/view/widget/custom_container.dart';
 import 'package:portpolio/view/widget/education_section.dart';
 import 'package:portpolio/view/widget/home_section.dart';
 import 'package:portpolio/view/widget/social_link_section.dart';
+import 'package:portpolio/view/widget/what_i_do_widget.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
@@ -121,6 +122,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             CustomContainer(homeKey: homeKey, child: HomeSection()),
             CustomContainer(child: const SocialLinks()),
             CustomContainer(homeKey: aboutKey, child: const AboutMeSection()),
+            CustomContainer(child: const WhatIDoWidget()),
             CustomContainer(
               homeKey: educationKey,
               child: const EducationSection(),

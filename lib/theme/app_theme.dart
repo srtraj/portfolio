@@ -33,8 +33,8 @@ ThemeData getAppTheme({required bool isDark, required bool isMobile}) {
           labelSmall: TextStyle(fontSize: 10),
         )
       : TextTheme(
-          titleLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          titleMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+          titleLarge: TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
+          titleMedium: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
           titleSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
           bodyLarge: TextStyle(fontSize: 20),
           bodyMedium: TextStyle(fontSize: 18),

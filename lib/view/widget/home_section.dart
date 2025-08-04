@@ -78,7 +78,7 @@ class HomeSection extends StatelessWidget {
                 RichText(
                   textAlign: TextAlign.justify,
                   text: TextSpan(
-                    style: textTheme.bodySmall,
+                    style: textTheme.bodyMedium,
                     children: const [
                       TextSpan(text: "I build "),
                       TextSpan(

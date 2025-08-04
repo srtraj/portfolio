@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:portpolio/generated/assets.dart';
-import 'package:portpolio/view/widget/glass_morphic_card.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class AboutMeSection extends StatelessWidget {
@@ -14,75 +12,69 @@ class AboutMeSection extends StatelessWidget {
     final isTabletOrMobile = ResponsiveBreakpoints.of(
       context,
     ).smallerOrEqualTo(TABLET);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('About Me', style: textTheme.bodyLarge),
         const Gap(20),
-        if (isTabletOrMobile)
-          Column(
-            spacing: 40,
-            children: [SkillDescription(), SkillCard(isCompactMode: true)],
-          )
-        else
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 20,
-            children: [
-              Expanded(child: SkillCard()),
-              Expanded(child: SkillDescription()),
-            ],
+        const AboutMeDescription(),
+        const Gap(30),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Center(
+            child: Wrap(
+              spacing: 16,
+              runSpacing: 16,
+              children: const [
+                HighlightCard(
+                  emoji: '⚡',
+                  title: 'Boosted App Speed',
+                  description:
+                      'Achieved 3× faster UI responsiveness across 10+ apps with smart rendering and state handling.',
+                ),
+                HighlightCard(
+                  emoji: '🚀',
+                  title: 'Faster Builds',
+                  description:
+                      'Cut build and release times by 45% with optimized pipelines and configs.',
+                ),
+                HighlightCard(
+                  emoji: '🤖',
+                  title: 'Smarter Workflows',
+                  description:
+                      'Automated CI/CD pipelines to boost team efficiency by 50% and reduce manual overhead.',
+                ),
+                HighlightCard(
+                  emoji: '🏗️',
+                  title: 'Scalable by Design',
+                  description:
+                      'Led modular architecture for 10+ apps, built for growth and easy maintenance.',
+                ),
+                HighlightCard(
+                  emoji: '🧩️',
+                  title: 'Multiplatform Application',
+                  description:
+                      'Built and deployed apps Android, iOS, Web, Windows, and Linux with consistent UX and shared codebase.',
+                ),
+              ],
+            ),
           ),
+        ),
       ],
     );
   }
 }
 
-class SkillCard extends StatelessWidget {
-  final bool isCompactMode;
-
-  const SkillCard({super.key, this.isCompactMode = false});
-
-  @override
-  Widget build(BuildContext context) {
-    final skills = [
-      GlassmorphicCard(
-        title: isCompactMode ? null : 'Flutter Development',
-        trailingImage: Assets.assetsFlutter,
-      ),
-      GlassmorphicCard(
-        title: isCompactMode ? null : 'Android Development',
-        trailingImage: Assets.assetsAndroid,
-      ),
-      GlassmorphicCard(
-        title: isCompactMode ? null : 'Compose Multiplatform',
-        trailingImage: Assets.assetsCompose,
-      ),
-      GlassmorphicCard(
-        title: isCompactMode ? null : 'FastAPI',
-        trailingImage: Assets.assetsPython,
-      ),
-    ];
-    if (isCompactMode) {
-      return Row(mainAxisSize: MainAxisSize.min, spacing: 10, children: skills);
-    }
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 10,
-      children: skills,
-    );
-  }
-}
-
-class SkillDescription extends StatelessWidget {
-  const SkillDescription({super.key});
+class AboutMeDescription extends StatelessWidget {
+  const AboutMeDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Text.rich(
       TextSpan(
-        style: GoogleFonts.notoSans(textStyle: textTheme.labelLarge),
+        style: GoogleFonts.notoSans(textStyle: textTheme.bodyMedium),
         children: [
           const TextSpan(text: 'Passionate '),
           TextSpan(
@@ -130,7 +122,7 @@ class SkillDescription extends StatelessWidget {
             text: 'fintech',
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.purple,
+              color: Color(0xFF4A148C),
             ),
           ),
           const TextSpan(text: ', and '),
@@ -145,6 +137,82 @@ class SkillDescription extends StatelessWidget {
         ],
       ),
       textAlign: TextAlign.justify,
+    );
+  }
+}
+
+class HighlightCard extends StatefulWidget {
+  final String emoji;
+  final String title;
+  final String description;
+
+  // final double? height;
+
+  const HighlightCard({
+    super.key,
+    required this.emoji,
+    required this.title,
+    required this.description,
+    // this.height,
+  });
+
+  @override
+  State<HighlightCard> createState() => _HighlightCardState();
+}
+
+class _HighlightCardState extends State<HighlightCard> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedScale(
+        scale: _isHovered ? 1.05 : 1.0,
+        duration: const Duration(milliseconds: 200),
+        child: Container(
+          width: 350,
+          // height: widget.height,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              width: _isHovered ? 2 : 1,
+              color: Theme.of(
+                context,
+              ).colorScheme.inverseSurface.withAlpha(_isHovered ? 200 : 100),
+            ),
+            color: Theme.of(
+              context,
+            ).colorScheme.inverseSurface.withAlpha(_isHovered ? 20 : 10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(widget.emoji, style: const TextStyle(fontSize: 28)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      widget.title,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                widget.description,
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

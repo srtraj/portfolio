@@ -21,9 +21,9 @@ class GlassmorphicCard extends StatefulWidget {
     this.blur = 10,
     this.padding,
     this.leadingImage,
-    this.expanded,
     this.title,
     this.trailingImage,
+    this.expanded,
   });
 
   @override
@@ -34,19 +34,16 @@ class _GlassmorphicCardState extends State<GlassmorphicCard>
     with TickerProviderStateMixin {
   bool isHover = false;
   bool isExpanded = false;
-  late double _defaultImageSize;
-  late double imageSize;
 
   void _onHover(bool hover) {
     setState(() {
       isExpanded = false;
       isHover = hover;
-      imageSize = hover ? _defaultImageSize + 10 : _defaultImageSize;
     });
     log(hover ? 'Hover Entered' : 'Hover Exited');
   }
 
-  Widget? _buildAnimatedSvg(String? assetPath) {
+  Widget? _buildAnimatedSvg(String? assetPath, double imageSize) {
     if (assetPath == null) return null;
 
     return AnimatedSize(
@@ -65,8 +62,8 @@ class _GlassmorphicCardState extends State<GlassmorphicCard>
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE);
-    _defaultImageSize = isMobile ? 30.0 : 40.0;
-    imageSize = _defaultImageSize;
+    final imageSize = isMobile ? 30.0 : 40.0;
+
     return MouseRegion(
       onEnter: (_) => _onHover(true),
       onExit: (_) => _onHover(false),
@@ -77,27 +74,28 @@ class _GlassmorphicCardState extends State<GlassmorphicCard>
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             padding: isHover
-                ? const EdgeInsets.all(10.0)
-                : const EdgeInsets.all(3.0),
+                ? const EdgeInsets.all(10)
+                : const EdgeInsets.all(3),
             decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.inverseSurface.withAlpha(50),
               borderRadius: BorderRadius.circular(widget.borderRadius),
               border: Border.all(
-                color: Theme.of(context).colorScheme.inverseSurface.withValues(alpha: 0.5), // fixed invalid alpha
-                width: 1.5,
+                color: Theme.of(
+                  context,
+                ).colorScheme.inverseSurface.withAlpha(128),
+                width: (isHover || isExpanded) ? 2 : 1,
               ),
             ),
             child: InkWell(
-              onTap: () => setState(() {
-                isExpanded = !isExpanded;
-              }),
+              onTap: () => setState(() => isExpanded = !isExpanded),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: widget.padding ?? const EdgeInsets.all(8),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ?_buildAnimatedSvg(widget.leadingImage),
+                    if (widget.leadingImage != null)
+                      _buildAnimatedSvg(widget.leadingImage, imageSize)!,
                     if (widget.title != null)
                       Expanded(
                         child: Padding(
@@ -122,8 +120,8 @@ class _GlassmorphicCardState extends State<GlassmorphicCard>
                           ),
                         ),
                       ),
-
-                    ?_buildAnimatedSvg(widget.trailingImage),
+                    if (widget.trailingImage != null)
+                      _buildAnimatedSvg(widget.trailingImage, imageSize)!,
                   ],
                 ),
               ),

@@ -33,7 +33,15 @@ class EducationSection extends StatelessWidget {
               leadingImage: Assets.assetsGraduate,
               expanded: Column(
                 spacing: 5,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    "Bachelor of Engineering in Computer Science",
+                    style: textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  LabelWidget(label: "University", value: "VTU"),
                   LabelWidget(label: "Year", value: "2019"),
                   LabelWidget(label: "Percentage", value: "7.7 CGPA"),
                 ],
